@@ -1,0 +1,113 @@
+//Stack implementation dynamically
+
+#include <stdio.h>
+#include<stdlib.h>
+
+int *stack;
+int n,top=-1;
+int choice;
+
+int main()
+{
+   printf("Enter the stack size you want :");
+   scanf("%d",&n);
+   stack=(int*)malloc(n*(sizeof(int)));
+   
+   while(1)
+   {
+       printf("1.Push\n");
+       printf("2.pop\n");
+       printf("3.traverse\n");
+       printf("4.peek\n");
+       printf("5.Exit\n");
+       
+       scanf("%d",&choice);
+       
+       switch(choice)
+       {
+           case 1: push();
+                   break;
+           case 2: pop();
+                   break;
+           case 3: traversal();
+                   break;
+           case 4: peek();
+                   break;
+           case 5: exit(0);
+           default:printf("Invalid input\n");
+       }
+   }
+}
+
+int isFull()
+{
+    if(top==n-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int isEmpty()
+{
+    if(top==-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+void push()
+{
+    int element;
+    if(isFull()){
+        printf("Stack is full !!!\n");
+    }
+    else{
+        top++;
+        printf("Enter the element u want to push :\n");
+        scanf("%d",&element);
+        stack[top]=element;
+        printf("%d is pushed\n",element);
+    }
+}
+
+int pop()
+{
+    int element;
+    if(isEmpty()){
+        printf("Stack is empty !!\n");
+    }
+    else{
+        element=stack[top];
+        top--;
+        printf("%d is popped\n",element);
+    }
+}
+
+int traversal()
+{
+    int i;
+    if(isEmpty()){
+        printf("Stack is empty !!\n");
+    }
+    else{
+        for(i=0;i<=top;i++){
+            printf("%d\t",stack[i]);
+        }
+    }
+}
+
+int peek()
+{
+    if (isEmpty()){
+        printf("Stack is empty\n");
+    }
+    else{
+        printf("%d is the peek value\n",stack[top]);
+    }
+}
+
+
