@@ -1,0 +1,151 @@
+//Double LinkedList
+
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *left;
+    struct node *right;
+};
+struct node *root=NULL;
+
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("Choose from the following :\n");
+        printf("1.Append\n2.AddatBegin\n3.AddAfter\n4.Length\n5.Display\n6.Exit\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1 : append();
+                     break;
+            case 2 : addatbegin();
+                     break;
+            case 3 : addafter();
+                     break;
+            case 4 : printf("%d\n",length());
+                     break;
+            case 5 : display();
+                     break;
+            case 6 : exit(0);
+            default: printf("invalid input !!");
+        }
+    }
+    
+}
+
+void append()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    printf("Enter node data :");
+    scanf("%d",&temp->data);
+    temp->left=NULL;
+    temp->right=NULL;
+    
+    if (root==NULL)
+    {
+        root=temp;
+    }
+    else
+    {
+        struct node *p;
+        p=root;
+        while(p->right!=NULL)
+        {
+            p=p->right;
+        }
+        p->right=temp;
+        temp->left=p;
+    }
+}
+
+void addatbegin()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    printf("enter node data:");
+    scanf("%d",&temp->data);
+    temp->left=NULL;
+    temp->right=NULL;
+    
+    if(root==NULL)
+    {
+        root=temp;
+    }
+    else
+    {
+        struct node *p;
+        p=root;
+        temp->right=root;
+        p->left=temp;
+        root=temp;
+    }
+}
+
+int length()
+{
+    int count;
+    struct node *temp;
+    temp=root;
+    while(temp->right!=NULL)
+    {
+        count++;
+        temp=temp->right;
+    }
+    return count;
+}
+
+void addafter()
+{
+    int loc,i=1,len;
+    struct node *temp,*p,*q;
+    
+    temp=(struct node*)malloc(sizeof(struct node));
+    p=root;
+    printf("Enter node data:");
+    scanf("%d",&temp->data);
+    temp->left=NULL;
+    temp->right=NULL;
+    len=length();
+    printf("enter the location u want to put the node :");
+    scanf("%d",&loc);
+    if(loc>len)
+    {
+        printf("invalid selection !! only %d nodes are available",len);
+    }
+    else
+    {
+        while(i<loc)
+        {
+            p=p->right;
+            i++;
+        }
+        q=p->right;
+        
+        temp->right=q;
+        q->left=temp;
+        p->right=temp;
+        temp->left=p;
+        printf("Node inserted !!!\n");
+    }
+    
+}
+
+
+void display()
+{
+    struct node *temp;
+    temp=root;
+    while(temp->right!=NULL)
+    {
+        printf("%d->",temp->data);
+        temp=temp->right;
+    }
+}
+
+
+
