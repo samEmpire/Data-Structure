@@ -1,0 +1,66 @@
+
+
+#include <stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *link;
+};
+struct node *top=NULL;
+
+int main()
+{
+    int ch;
+    while(1)
+    {
+        printf("choose from following :\n");
+        printf(" 1.Push\n 2.Pop\n 3.Traverse\n 4.Quit\n");
+        scanf("%d",&ch);
+        
+        switch(ch)
+        {
+            case 1 : push();
+                     break;
+            case 2 : pop();
+                     break;
+            case 3 : traverse();
+                     break;
+            case 4 : exit(0);
+            default: printf("invalid input !!!");
+        }
+    }
+    
+}
+
+void push()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    printf("Enter node data :");
+    scanf("%d",&temp->data);
+    temp->link=top;
+    top=temp;
+    printf("%d has pushed\n",temp->data);
+}
+
+void pop()
+{
+    struct node *temp;
+    temp=top;
+    top=temp->link;
+    temp->link=NULL;
+    free(temp);
+    printf("one item popped !!!\n");
+}
+
+void traverse()
+{
+    struct node *temp;
+    temp=top;
+    while(temp!=NULL)
+    {
+        printf("%d->",temp->data);
+        temp=temp->link;
+    }
+}
