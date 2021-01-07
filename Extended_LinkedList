@@ -1,0 +1,250 @@
+//Linked list
+
+#include <stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *link;
+};
+struct node *root=NULL;
+
+
+void main()
+{
+    while(1)
+    {
+        int choice;
+        printf("\nChoose from the following :\n");
+        printf("1.Append\n");
+        printf("2.Add at Begin\n");
+        printf("3.Add after\n");
+        printf("4.Length\n");
+        printf("5.Display\n");
+        printf("6.Delete\n");
+        printf("7.Swap Node\n");
+        printf("8.Reverse the list\n");
+        printf("9.Exit\n");
+        
+        printf("Enter ur choice :");
+        scanf("%d",&choice);
+        
+        switch(choice)
+        {
+            case 1 : append();
+                     break;
+            case 2 : addatbegin();
+                     break;
+            case 3 : addafter();
+                     break;
+            case 4 : length();
+                     break;
+            case 5 : display();
+                     break;
+            case 6 : delete();
+                     break;
+            case 7 : node_swap();
+                     break;
+            case 8 : reverse();
+                     break;
+            case 9 : exit(0);
+            default : printf("invalid input !! please choose from option 01-07 ..");
+        }
+    }
+}
+
+void append()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    
+    printf("Enter node data");
+    scanf("%d",&temp->data);
+    temp->link=NULL;
+    
+    if (root==NULL)
+    {
+        root=temp;
+    }
+    else
+    {
+        struct node *p;
+        p=root;
+        while(p->link !=NULL)
+        {
+           p=p->link;
+           
+        }
+        p->link=temp;
+        
+    }
+}
+
+void addatbegin()
+{
+    struct node *temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    
+    printf("enter node data :");
+    scanf("%d",&temp->data);
+    temp->link=NULL;
+    
+    if (root==NULL)
+    {
+        root=temp;
+    }
+    else
+    {
+        temp->link=root;
+        root=temp;
+    }
+}
+
+int length()
+{
+    int count=0;
+    struct node *p;
+    p=root;
+    while(p!=NULL)
+    {
+        count++;
+        p=p->link;
+    }
+    //printf("%d",count);
+    return count;
+}
+
+void addafter()
+{
+    int len,loc,i=1;
+    len=length();
+    
+    struct node *temp,*p;
+    temp=(struct node *)malloc(sizeof(struct node));
+    printf("enter node data");
+    scanf("%d",&temp->data);
+    temp->link=NULL;
+    
+    printf("enter the location where u want to insert the node :");
+    scanf("%d",&loc);
+    
+    p=root;
+    
+    while(i<loc)
+    {
+        p=p->link;
+        i++;
+    }
+    temp->link=p->link;
+    p->link=temp;
+}
+
+void display()
+{
+    struct node *p;
+    p=root;
+    if (p==NULL)
+    {
+        printf("No nodes in the list");
+    }
+    else
+    {
+        while(p!=NULL)
+        {
+            printf("%d->",p->data);
+            p=p->link;
+        }
+    }
+    
+}
+
+void delete()
+{
+    int loc,i=1;
+    int len=length();
+    struct node *temp;
+    printf("enter the node u want to delete :");
+    scanf("%d",&loc);
+    
+    if (loc>len)
+    {
+        printf("Invalid choice,only %d nodes are available",len);
+    }
+    else if (loc==1)
+    {
+        temp=root;
+        root=temp->link;
+        temp->link=NULL;
+        free(temp);
+    }
+    else
+    {
+        struct node *p,*q;
+        p=root;
+        
+        while(i<loc-1)
+        {
+            p=p->link;
+            i++;
+        }
+        q=p->link;
+        p->link=q->link;
+        q->link=NULL;
+        free(q);
+    }
+    
+}
+
+void node_swap()
+{
+    struct node *p,*q,*r;
+    int ch,i=1,len;
+    p=root;
+    len=length();
+    printf("Enter the nodes u want to swap :");
+    scanf("%d",&ch);
+    
+    while(i<ch-1)
+    {
+        p=p->link;
+    }
+    q=p->link;
+    r=q->link;
+    
+    q->link=r->link;
+    p->link=r;
+    r->link=q;
+    
+    printf("Nodes are swapped !!!");
+}
+
+int reverse()
+{
+    struct node *p,*q;
+    int i,j,k,len,temp;
+    len=length();
+    i=0;
+    j=len-1;
+    p=q=root;
+    
+    while(i<j)
+    {
+        k=0;
+        while(k<j)
+        {
+            q=q->link;
+            k++;
+        }
+        temp=q->data;
+        q->data=p->data;
+        p->data=temp;
+        i++;
+        j--;
+        p=p->link;
+        q=root;
+    }
+    printf("reversed list is :");
+    display();
+}
+
